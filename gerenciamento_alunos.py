@@ -1,8 +1,6 @@
 import time
 import unittest
 
-from appium import webdriver
-from appium.options.common.base import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
 
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,41 +8,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
 from config import locators, test_data
+from setup import SetUp
 
 
-class TestStringMethods(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        options = AppiumOptions()
-        options.load_capabilities({
-            "platformName": "Android",
-            "appium:automationName": "UiAutomator2",
-            "appium:ensureWebviewsHavePages": True
-        })
-
-        cls.driver = webdriver.Remote("http://127.0.0.1:4723", options=options)
-        cls.pacote = "app.mfit.personal"
-        cls.driver.activate_app(cls.pacote)
-
-
-        return super().setUpClass()
+class TestStringMethods(SetUp, unittest.TestCase):
 
     def test_adicionar_novo_aluno(self):
-
         driver = self.driver
-
-        personal_opt = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["personal_opt"])))
-        personal_opt.click()
-
-        email_personal = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["email_personal"])))
-        email_personal.send_keys(test_data["email_personal"])
-
-        senha_personal = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["senha_personal"])))
-        senha_personal.send_keys(test_data["senha_personal"])
-
-        btn_login = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_login"])))
-        btn_login.click()
 
         add_novo_aluno = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["add_novo_aluno"])))
         add_novo_aluno.click()
@@ -113,14 +83,3 @@ class TestStringMethods(unittest.TestCase):
             print("Cadastro validado com sucesso!")
         except Exception as erro:
             print(f"Erro ao validar o cadastro: {erro}")
-
-        #opcoes = driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"Opções\")")
-        #opcoes.click()
-        #excluir_aluno = driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"Excluir aluno\")")
-        #excluir_aluno.click()
-
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        return super().tearDownClass()

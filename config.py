@@ -32,6 +32,9 @@ locators = {
     "fechar_popup": 'new UiSelector().text("Fechar")',
     "nome_cabecalho": f'new UiSelector().text("{test_data["nome_aluno"]}")',
     "modalidade_cabecalho": f'new UiSelector().text("{test_data["modalidade"]}")',
-
-
+    "alunos_cadastrados": f'new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("{"Alunos"}"))',
+    "aluno_inserido": f'new UiSelector().text("{"ETA 2024"}")',
+    "btn_opcoes": 'new UiSelector().text("Opções")',
+    "btn_excluir_aluno": 'new UiSelector().text("Excluir aluno")',
+    "msg_aluno_excluido": 'new UiSelector().text("Esse aluno foi excluído.")',
 }

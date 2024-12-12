@@ -60,7 +60,7 @@ class TestStringMethods(SetUp, unittest.TestCase):
         bloqueio_opt = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["bloqueio_opt"])))
         bloqueio_opt.click()
 
-        btn_salvar = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_salvar"])))
+        btn_salvar = WebDriverWait(driver, 15).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_salvar"])))
         btn_salvar.click()
 
         fechar_popup = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["fechar_popup"])))
@@ -79,7 +79,7 @@ class TestStringMethods(SetUp, unittest.TestCase):
             titulo_texto = titulo_cadastro.text
             modalidade_texto = modalidade_cadastro.text
 
-            assert test_data["nome_aluno"] in titulo_texto, f"Nome '{test_data[nome_aluno]}' não encontrado no título da tela."
+            assert test_data["nome_aluno"] in titulo_texto, f"Nome '{test_data["nome_aluno"]}' não encontrado no título da tela."
             assert test_data["modalidade"] in modalidade_texto, f"personal_opt '{test_data["modalidade"]}' não encontrada no título da tela."
             print("Cadastro validado com sucesso!")
         except Exception as erro:
@@ -89,8 +89,8 @@ class TestStringMethods(SetUp, unittest.TestCase):
     def test_excluir_aluno(self):
         driver = self.driver
 
-        el1 = driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"\")")
-        el1.click()
+        btn_inicio = driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"\")")
+        btn_inicio.click()
 
         for i in range(5):  # Tentativas de fazer o scroll até o topo
             try:
@@ -106,15 +106,13 @@ class TestStringMethods(SetUp, unittest.TestCase):
         alunos_cadastrados = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["alunos_cadastrados"])))
         alunos_cadastrados.click()
 
-        aluno_inserido = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ACCESSIBILITY_ID, "ETA 2024 Presencial")))
+        aluno_inserido = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["aluno_inserido"])))
         print(aluno_inserido)
         aluno_inserido.click()
-        btn_opcoes = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_opcoes"])
+        btn_opcoes = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_opcoes"])))
         btn_opcoes.click()
-        btn_excluir_aluno = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_excluir_aluno"])
+        btn_excluir_aluno = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_excluir_aluno"])))
         btn_excluir_aluno.click()
-
-        #msg_aluno_excluido = driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"Esse aluno foi excluído.\")")
 
         try:
             msg_aluno_excluido = WebDriverWait(driver, 10).until(
@@ -125,7 +123,7 @@ class TestStringMethods(SetUp, unittest.TestCase):
 
             assert "Esse aluno foi excluído" in mensagem_exclusao, f"Mensagem '{"Esse aluno foi excluído"}' não encontrada."
 
-            print("Mensagem encontrada!")
+            print("Aluno excluído com sucesso!")
         except Exception as erro:
             print(f"Erro ao localizar mensagem de exclusão: {erro}")
 

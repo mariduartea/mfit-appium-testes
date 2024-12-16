@@ -2,6 +2,7 @@ from appium import webdriver
 from appium.options.common.base import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 from selenium.webdriver.support import expected_conditions as EC
 from config import locators,test_data
@@ -15,7 +16,7 @@ class SetUp:
         options.load_capabilities({
             "platformName": "Android",
             "appium:automationName": "UiAutomator2",
-            "appium:ensureWebviewsHavePages": True
+            "appium:ensureWebviewsHavePages": True,
         })
 
         cls.driver = webdriver.Remote("http://127.0.0.1:4723", options=options)
@@ -28,7 +29,15 @@ class SetUp:
     @classmethod
     def login(cls, driver):
 
-        #fazer login
+        try:
+            entrar_novamente = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["entrar_novamente"])))
+
+            entrar_novamente.click()
+
+        except TimeoutException:
+            pass
+
         personal_opt = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["personal_opt"])))
         personal_opt.click()

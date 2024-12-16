@@ -12,7 +12,7 @@ from config import locators, test_data
 from setup import SetUp
 
 
-class TestStringMethods(SetUp, unittest.TestCase):
+class GerenciarAlunos(SetUp, unittest.TestCase):
 
     def test_adicionar_novo_aluno(self):
         driver = self.driver
@@ -107,7 +107,6 @@ class TestStringMethods(SetUp, unittest.TestCase):
         alunos_cadastrados.click()
 
         aluno_inserido = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["aluno_inserido"])))
-        print(aluno_inserido)
         aluno_inserido.click()
         btn_opcoes = WebDriverWait(driver, 10).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, locators["btn_opcoes"])))
         btn_opcoes.click()

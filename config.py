@@ -1,8 +1,8 @@
 
 # Dados de Teste
 test_data = {
-    "email_personal": "abas@cesar.school",
-    "senha_personal": "14051993",
+    "email_personal": "mrda@cesar.school",
+    "senha_personal": "14051997",
     "nome_aluno": "Bolinha 123",
     "email_aluno": "Testa@gmail.com",
     "modalidade": "Presencial",
